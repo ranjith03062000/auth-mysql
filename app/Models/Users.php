@@ -10,7 +10,7 @@ class Users extends Model
     
 
    
-    protected $table = 'vendors';
+    protected $table = 'user';
     protected $primaryKey = 'id ';
     
 

@@ -19,7 +19,10 @@ class SignInandUpController extends Controller
 
     }
     /* This Function User Create */
-
+    public function getusers(Request $request){
+        $userList        = User::all();
+        return response()->json(["status"=>200,"messages"=>"","data"=>$userList]);
+    }
     public function register(Request $request){
         $data    = $request->all();
 
@@ -32,6 +35,12 @@ class SignInandUpController extends Controller
         /* If data valid any one field that will be return the fail message*/
         if($validation->fails()){
             return $validation->errors()->first();   
+        }
+
+        /* in this function existing users check*/
+        $existingusers = DB::table('users')->where('email_id',$data['email'])->count();
+        if($existingusers>0){
+            return response()->json(["status"=>500,"data"=>[],"messages"=>"This Email Already Added"]);
         }
 
        /*this is password Encryption code */
